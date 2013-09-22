@@ -11,7 +11,7 @@ requirejs.config({
 		"backbone-super":"../vendors/backbone-super/backbone-super/backbone-super",
 		"backbone-command":"../vendors/backbone-command/backbone-command",
 		"backbone-injector":"../vendors/backbone-injector/backbone-injector",
-		"TweenMax":"../vendors/greensock-js/src/uncompressed/TweenMax",
+		"TweenLite":"../vendors/greensock-js/src/uncompressed/TweenLite",
 		"TweenEasePack":"../vendors/greensock-js/src/uncompressed/easing/EasePack",
 		"TweenCSSPlugin":"../vendors/greensock-js/src/uncompressed/plugins/CSSPlugin",
 		"templates":"../templates"
@@ -55,16 +55,16 @@ requirejs.config({
 			"deps":["injector-js", "backbone"]
 		},
 
-		"TweenMax":{
-			"exports":"TweenMax"
+		"TweenLite":{
+			"exports":"TweenLite"
 		},
 
 		"TweenEasePack":{
-			"deps":["TweenMax"]
+			"deps":["TweenLite"]
 		},
 
 		"TweenCSSPlugin":{
-			"deps":["TweenMax"]
+			"deps":["TweenLite"]
 		}
 	}
 });
@@ -79,7 +79,7 @@ define([
 	"backbone-super",
 	"backbone-command",
 	"backbone-injector",
-	"TweenMax",
+	"TweenLite",
 	"TweenEasePack",
 	"TweenCSSPlugin"
 ], function() {

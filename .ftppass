@@ -1,0 +1,10 @@
+{
+	"staging": {
+		"username": "yourusername",
+		"password": "yourpassword"
+	},
+	"production": {
+		"username": "yourusername",
+		"password": "yourpassword"
+	}
+}

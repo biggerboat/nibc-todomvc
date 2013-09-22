@@ -1,7 +1,7 @@
 define([
 	'text!templates/TestView.html',
 	'common'
-], function (template, common) {
+], function(template, common) {
 	var TestView = Backbone.View.extend({
 		className: 'testView',
 		template: Handlebars.compile(template),
@@ -12,7 +12,7 @@ define([
 		},
 
 		initialize: function() {
-			this.listenTo(this.testModel,'change:name', this.render);
+			this.listenTo(this.testModel, 'change:name', this.render);
 		},
 
 		render: function() {

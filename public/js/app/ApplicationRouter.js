@@ -10,18 +10,17 @@ require([
 	//COMMANDS
 	'command/OnTestModelChangedLogSomethingCommand'
 
-], function (common,
-	 //VIEWS
-	 TestView,
+], function(
+	common,
 
-	 //SERVICES
+	//VIEWS
+	TestView,
 
-	 //MODELS
-	 TestModel,
+	//MODELS
+	TestModel,
 
-	 //COMMANDS
-	 OnTestModelChangedLogSomethingCommand
-	) {
+	//COMMANDS
+	OnTestModelChangedLogSomethingCommand) {
 
 	var ApplicationRouter = Backbone.CommandRouter.extend({
 
@@ -30,7 +29,7 @@ require([
 		$el: null,
 
 		routes: {
-			"":	""
+			"": ""
 		},
 
 		initialize: function(options) {
@@ -41,7 +40,7 @@ require([
 			this.addViews();
 			this.bindCommands();
 
-			this.injector.getInstance("testModel").set({name:'Paul'});
+			this.injector.getInstance("testModel").set({name: 'Paul'});
 		},
 
 		initializeModels: function() {
@@ -49,7 +48,7 @@ require([
 		},
 
 		initializeViews: function() {
-			this.testView = new TestView({injector:this.injector});
+			this.testView = new TestView({injector: this.injector});
 		},
 
 		addViews: function() {
@@ -57,12 +56,12 @@ require([
 		},
 
 		bindCommands: function() {
-			this.bindCommand(this.injector.getInstance('testModel'),"change", OnTestModelChangedLogSomethingCommand);
+			this.bindCommand(this.injector.getInstance('testModel'), "change", OnTestModelChangedLogSomethingCommand);
 		}
 	});
 
-	$(function () {
-		var theRouter = new ApplicationRouter({$el:$("body")});
+	$(function() {
+		var theRouter = new ApplicationRouter({$el: $("body")});
 		Backbone.history.start({});
 	});
 });

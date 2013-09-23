@@ -14,6 +14,7 @@ requirejs.config({
 		"TweenLite":"../vendors/greensock-js/src/uncompressed/TweenLite",
 		"TweenEasePack":"../vendors/greensock-js/src/uncompressed/easing/EasePack",
 		"TweenCSSPlugin":"../vendors/greensock-js/src/uncompressed/plugins/CSSPlugin",
+		"handlebars-helpers":"plugins/handlebars-helpers",
 		"templates":"../templates"
 	},
 
@@ -65,6 +66,10 @@ requirejs.config({
 
 		"TweenCSSPlugin":{
 			"deps":["TweenLite"]
+		},
+
+		"handlebars-helpers": {
+			deps: ["handlebars"]
 		}
 	}
 });
@@ -81,7 +86,8 @@ define([
 	"backbone-injector",
 	"TweenLite",
 	"TweenEasePack",
-	"TweenCSSPlugin"
+	"TweenCSSPlugin",
+	"handlebars-helpers"
 ], function() {
 	//Enforce loading globally used libraries
 });

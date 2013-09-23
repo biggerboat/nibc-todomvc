@@ -1,13 +1,11 @@
 define([
-	'text!templates/FooterView.html',
+	'text!templates/todo/HeaderView.html',
 	'common'
 ], function (template, common) {
-	var FooterView = Backbone.View.extend({
+	var HeaderView = Backbone.View.extend({
 
-		navigatorBehaviors: [],
-
-		id: 'info',
-		tagName: 'footer',
+		id: 'header',
+		tagName: 'header',
 		template: Handlebars.compile(template),
 
 		events: {
@@ -19,10 +17,9 @@ define([
 
 		render: function() {
 			this.$el.html(this.template({}));
-
 			return this;
 		}
 	});
 
-	return FooterView;
+	return HeaderView;
 });

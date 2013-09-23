@@ -1,0 +1,18 @@
+.homeView {
+	width: 600px;
+}
+
+.homeView img {
+	float: right;
+	margin: 10px 0px 10px 30px;
+}
+
+.launch {
+	background: #cccccc;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.launch:active {
+	background: #dddddd;
+}

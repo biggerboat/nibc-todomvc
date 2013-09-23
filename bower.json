@@ -1,17 +1,17 @@
 {
-	"name": "navigator-injector-backbone-command-setup",
-
-	"dependencies": {
-		"jquery":"latest",
-		"requirejs":"latest",
-		"requirejs-text":"latest",
-		"handlebars":"latest",
-		"navigator.js":"latest",
-		"underscore":"latest",
-		"backbone":"latest",
-		"backbone-super":"latest",
-		"backbone-injector":"latest",
-		"backbone-command":"latest",
-		"greensock-js":"latest"
-	}
+  "name": "navigator-injector-backbone-command-setup",
+  "dependencies": {
+    "jquery": "latest",
+    "requirejs": "latest",
+    "requirejs-text": "latest",
+    "handlebars": "latest",
+    "navigator.js": "latest",
+    "underscore": "latest",
+    "backbone": "latest",
+    "backbone-super": "latest",
+    "backbone-injector": "latest",
+    "backbone-command": "latest",
+    "greensock-js": "latest",
+    "todomvc-common": "~0.1.8"
+  }
 }

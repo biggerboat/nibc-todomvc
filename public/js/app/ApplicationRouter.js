@@ -2,31 +2,33 @@ require([
 	'common',
 
 	//VIEWS
-	'view/TestView',
+	'view/TodoAppView',
+	'view/HeaderView',
+	'view/FooterView'
 
 	//MODELS
-	'model/TestModel',
 
 	//COMMANDS
-	'command/OnTestModelChangedLogSomethingCommand'
 
 ], function(
 	common,
 
 	//VIEWS
-	TestView,
+	TodoAppView,
+	HeaderView,
+	FooterView
 
 	//MODELS
-	TestModel,
 
 	//COMMANDS
-	OnTestModelChangedLogSomethingCommand) {
+) {
 
 	var ApplicationRouter = Backbone.CommandRouter.extend({
 
-		testView: null,
-
 		$el: null,
+
+		njs: null, //navigatorjs.Navigator
+		stateViewMap: null, //navigatorjs.integration.StateMap
 
 		routes: {
 			"": ""
@@ -35,28 +37,35 @@ require([
 		initialize: function(options) {
 			this.$el = options.$el;
 
-			this.initializeModels();
-			this.initializeViews();
-			this.addViews();
+			this.njs = new navigatorjs.Navigator();
+			this.stateViewMap = new navigatorjs.integration.StateViewMap(this.njs, this.$el);
+			this.injector.map("njs").toValue(this.njs);
+
+			var debugConsole = new navigatorjs.features.DebugConsole(this.njs),
+				$debugConsole = debugConsole.get$El(),
+				cssPosition = {position: 'fixed', left: 10, bottom: 10};
+
+			$debugConsole.css(cssPosition).appendTo('body');
+
+			this.mapModels();
+			this.mapStates();
 			this.bindCommands();
 
-			this.injector.getInstance("testModel").set({name: 'Paul'});
+			this.njs.start();
 		},
 
-		initializeModels: function() {
-			this.injector.map('testModel').toSingleton(TestModel);
+		mapModels: function() {
+
 		},
 
-		initializeViews: function() {
-			this.testView = new TestView({injector: this.injector});
-		},
-
-		addViews: function() {
-			this.$el.append(this.testView.render().$el);
+		mapStates: function() {
+			var todoAppViewRecipe = this.stateViewMap.mapState("/").toView(TodoAppView);
+			this.stateViewMap.mapState("/").toView(HeaderView).withParent(todoAppViewRecipe);
+			this.stateViewMap.mapState("/").toView(FooterView);
 		},
 
 		bindCommands: function() {
-			this.bindCommand(this.injector.getInstance('testModel'), "change", OnTestModelChangedLogSomethingCommand);
+			//this.bindCommand(this.injector.getInstance('testModel'), "change", OnTestModelChangedLogSomethingCommand);
 		}
 	});
 

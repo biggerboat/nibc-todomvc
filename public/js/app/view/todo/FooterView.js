@@ -7,15 +7,17 @@ define([
 		tagName: 'footer',
 		template: Handlebars.compile(template),
 
+		todosModel: 'inject',
+
 		events: {
 		},
 
 		initialize: function() {
-
+			this.listenTo(this.todosModel, 'change', this.render);
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(this.template(this.todosModel.toJSON()));
 
 			return this;
 		}

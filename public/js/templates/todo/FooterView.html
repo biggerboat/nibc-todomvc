@@ -1,5 +1,5 @@
 <span id="todo-count">
-		<strong>{{todos.remaining}}</strong> {{plural "item" todos.remaining}} left
+		<strong>{{remaining}}</strong> {{plural "item" remaining}} left
 	</span>
 <ul id="filters">
 	<li>
@@ -12,6 +12,6 @@
 		<a href="#todos/completed">Completed</a>
 	</li>
 </ul>
-<button id="clear-completed" class="{{^todos.completed}}hidden{{/todos.completed}}">
-	Clear completed ({{todos.completed}})
+<button id="clear-completed">
+	Clear completed ({{completed}})
 </button>

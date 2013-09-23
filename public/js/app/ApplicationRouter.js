@@ -3,22 +3,27 @@ require([
 
 	//VIEWS
 	'view/HomeView',
-	'view/todo/TodoAppView'
+	'view/todo/TodoAppView',
 
 	//MODELS
+	'model/TodoCollection',
+	'model/TodosModel',
 
 	//COMMANDS
-
+	'command/OnChangeUpdateFilteredTodos'
 ], function(
 	common,
 
 	//VIEWS
 	HomeView,
-	TodoAppView
+	TodoAppView,
 
 	//MODELS
+	TodoCollection,
+	TodosModel,
 
 	//COMMANDS
+	OnChangeUpdateFilteredTodos
 ) {
 
 	var ApplicationRouter = Backbone.CommandRouter.extend({
@@ -42,7 +47,7 @@ require([
 			this.mapStates();
 			this.bindCommands();
 
-			this.njs.start("todo");
+			this.njs.start("home");
 		},
 
 		initializeNavigator: function() {
@@ -58,7 +63,8 @@ require([
 		},
 
 		mapModels: function() {
-			this.injector.map('todos').toSingleton(Backbone.Collection);
+			this.injector.map('todoCollection').toSingleton(TodoCollection);
+			this.injector.map('todosModel').toSingleton(TodosModel);
 		},
 
 		mapStates: function() {
@@ -67,7 +73,7 @@ require([
 		},
 
 		bindCommands: function() {
-			//this.bindCommand(this.injector.getInstance('testModel'), "change", OnTestModelChangedLogSomethingCommand);
+			this.bindCommand(this.injector.getInstance('todoCollection'), "change reset add remove", OnChangeUpdateFilteredTodos);
 		}
 	});
 

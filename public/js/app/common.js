@@ -15,6 +15,7 @@ requirejs.config({
 		"TweenEasePack":"../vendors/greensock-js/src/uncompressed/easing/EasePack",
 		"TweenCSSPlugin":"../vendors/greensock-js/src/uncompressed/plugins/CSSPlugin",
 		"handlebars-helpers":"plugins/handlebars-helpers",
+		"backbone-recursive-tojson":"plugins/backbone-recursive-tojson",
 		"templates":"../templates"
 	},
 
@@ -70,6 +71,10 @@ requirejs.config({
 
 		"handlebars-helpers": {
 			deps: ["handlebars"]
+		},
+
+		"backbone-recursive-tojson": {
+			deps: ["backbone"]
 		}
 	}
 });
@@ -87,7 +92,8 @@ define([
 	"TweenLite",
 	"TweenEasePack",
 	"TweenCSSPlugin",
-	"handlebars-helpers"
+	"handlebars-helpers",
+	"backbone-recursive-tojson"
 ], function() {
 	//Enforce loading globally used libraries
 });

@@ -4,13 +4,14 @@ define([
 ], function (TodoItemModel, common) {
 	var TodosModel = Backbone.Model.extend({
 		defaults: {
-			todos: null //Backbone.Collection
+			filteredTodos: null, // []
+			filter: 'all' //all, active, completed
 		},
 
 		initialize: function() {
 			this.set({
-				todos: new Backbone.Collection({model:TodoItemModel})
-			})
+				activeTodos: []
+			});
 		}
 	});
 

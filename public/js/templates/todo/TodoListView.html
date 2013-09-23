@@ -1,14 +1,14 @@
 <input id="toggle-all" type="checkbox" {{#todos.allComplete}}checked="checked"{{/todos.allComplete}}>
 <label for="toggle-all">Mark all as complete</label>
 <ul id="todo-list">
-{{#todos}}
-	<li class="todo {{^matches}}hidden{{/matches}} {{#complete}}completed{{/complete}} {{#editing}}editing{{/editing}}" {{data 'todo'}}>
+{{#filteredTodos}}
+	<li class="todo {{#complete}}completed{{/complete}} {{#editing}}editing{{/editing}}">
 		<div class="view">
 			<input class="toggle" type="checkbox" {{#complete}}checked="checked"{{/complete}}>
-			<label>{{text}}</label>
+			<label>{{title}}</label>
 			<button class="destroy"></button>
 		</div>
 		<input class="edit" type="text" value="{{text}}">
 	</li>
-{{/todos}}
+{{/filteredTodos}}
 </ul>

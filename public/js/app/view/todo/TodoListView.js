@@ -8,17 +8,20 @@ define([
 		tagName: 'section',
 		template: Handlebars.compile(template),
 
-		todos: 'inject',
+		todosModel: 'inject',
 
 		events: {
 		},
 
 		initialize: function() {
+
+			this.listenTo(this.todosModel, "change:filteredTodos", this.render);
+
 			this.render();
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(this.template(this.todosModel.toJSON()));
 			return this;
 		}
 	});

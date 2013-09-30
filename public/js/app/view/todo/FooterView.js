@@ -3,6 +3,9 @@ define([
 	'common'
 ], function (template, common) {
 	var FooterView = Backbone.View.extend({
+
+		navigatorBehaviors: ["IHasStateUpdate"],
+
 		id: 'footer',
 		tagName: 'footer',
 		template: Handlebars.compile(template),
@@ -14,12 +17,18 @@ define([
 
 		initialize: function() {
 			this.listenTo(this.todosModel, 'change', this.render);
+
+			this.render();
 		},
 
 		render: function() {
 			this.$el.html(this.template(this.todosModel.toJSON()));
 
 			return this;
+		},
+
+		onStateUpdate: function(truncatedState, fullState) {
+			console.log('FooterView -> updateState', truncatedState.getPath(), fullState.getPath());
 		}
 	});
 

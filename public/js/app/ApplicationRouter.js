@@ -4,6 +4,10 @@ require([
 	//VIEWS
 	'view/HomeView',
 	'view/todo/TodoAppView',
+	'view/todo/HeaderView',
+	'view/todo/FooterView',
+	'view/todo/TodoListView',
+	'view/todo/InfoView',
 
 	//MODELS
 	'model/TodoCollection',
@@ -17,6 +21,10 @@ require([
 	//VIEWS
 	HomeView,
 	TodoAppView,
+	HeaderView,
+	FooterView,
+	TodoListView,
+	InfoView,
 
 	//MODELS
 	TodoCollection,
@@ -48,7 +56,7 @@ require([
 			this.mapStates();
 			this.bindCommands();
 
-			this.njs.start("home");
+			this.njs.start(window.location.hash.replace('#',''));
 		},
 
 		initializeNavigator: function() {
@@ -74,8 +82,16 @@ require([
 		},
 
 		mapStates: function() {
-			this.stateViewMap.mapState("/home").toView(HomeView).withArguments({injector:this.injector});
-			this.stateViewMap.mapState("/todo").toView(TodoAppView).withArguments({injector:this.injector});
+			this.stateViewMap.mapState("home").toView(HomeView).withArguments({injector:this.injector});
+
+			//TODO APP
+			var todoStates = ["todo", "todo/active", "todo/completed"],
+				todoRecipe = this.stateViewMap.mapState(todoStates).toView(TodoAppView).withArguments({injector:this.injector});
+
+			this.stateViewMap.mapState(todoStates).toView(HeaderView).withArguments({injector:this.injector}).withParent(todoRecipe).inside("#todoapp");
+			this.stateViewMap.mapState(todoStates).toView(TodoListView).withArguments({injector:this.injector}).withParent(todoRecipe).inside("#todoapp");
+			this.stateViewMap.mapState(todoStates).toView(FooterView).withArguments({injector:this.injector}).withParent(todoRecipe).inside("#todoapp");
+			this.stateViewMap.mapState(todoStates).toView(InfoView).withArguments({injector:this.injector}).withParent(todoRecipe);
 		},
 
 		bindCommands: function() {

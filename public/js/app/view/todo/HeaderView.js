@@ -5,6 +5,8 @@ define([
 ], function (template, TodoItemModel, common) {
 	var HeaderView = Backbone.View.extend({
 
+		navigatorBehaviors: [""],
+
 		id: 'header',
 		tagName: 'header',
 		template: Handlebars.compile(template),

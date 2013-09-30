@@ -4,6 +4,8 @@ define([
 ], function (template, common) {
 	var TodoListView = Backbone.View.extend({
 
+		navigatorBehaviors: [""],
+
 		id: 'main',
 		tagName: 'section',
 		template: Handlebars.compile(template),

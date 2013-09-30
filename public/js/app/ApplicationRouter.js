@@ -32,6 +32,7 @@ require([
 
 		njs: null, //navigatorjs.Navigator
 		stateViewMap: null, //navigatorjs.integration.StateViewMap
+		stateUrlSyncer: null, //new navigatorjs.integration.StateUrlSyncer
 
 		routes: {
 			"": ""
@@ -53,6 +54,11 @@ require([
 		initializeNavigator: function() {
 			this.njs = new navigatorjs.Navigator();
 			this.stateViewMap = new navigatorjs.integration.StateViewMap(this.njs, this.$el);
+			/** TMP, SHOULD MOVE INSIDE NAVIGATORJS */
+			this.stateUrlSyncer = new navigatorjs.integration.StateUrlSyncer(this.njs);
+			//this.stateUrlSyncer.usePushState("");
+			this.stateUrlSyncer.start();
+			/** END TMP */
 			this.injector.map("njs").toValue(this.njs);
 
 			var debugConsole = new navigatorjs.features.DebugConsole(this.njs),

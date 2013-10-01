@@ -14,7 +14,8 @@ define([
 		todosModel: 'inject',
 
 		events: {
-			'click .toggle': 'onToggleComplete'
+			'click .toggle': 'onToggleComplete',
+			'click .destroy': 'onDestroyClick'
 		},
 
 		initialize: function() {
@@ -33,12 +34,29 @@ define([
 		onToggleComplete: function(e) {
 			var $checkbox = $(e.target),
 				isCompleted = $checkbox.is(':checked'),
-				$todoItem = $checkbox.parents(".todo:first"),
-				todoIndex = $todoItem.data('index'),
-				filteredTodos = this.todosModel.get('filteredTodos'),
-				todoItemModel = filteredTodos[todoIndex];
+				todoItemModel = this.getTodoModelByCheckbox($checkbox);
 			
 			todoItemModel.set({completed:isCompleted})
+		},
+
+		onDestroyClick: function(e) {
+			var $checkbox = $(e.target),
+				todoItemModel = this.getTodoModelByCheckbox($checkbox);
+
+			this.todoCollection.remove(todoItemModel);
+		},
+
+		getTodoIndexByCheckbox: function($checkbox) {
+			var $todoItem = $checkbox.parents(".todo:first");
+
+			return $todoItem.data('index');
+		},
+
+		getTodoModelByCheckbox: function($checkbox) {
+			var todoIndex = this.getTodoIndexByCheckbox($checkbox),
+				filteredTodos = this.todosModel.get('filteredTodos');
+
+			return filteredTodos[todoIndex];
 		}
 	});
 

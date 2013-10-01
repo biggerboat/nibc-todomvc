@@ -16,7 +16,7 @@ define([
 		$input: null,
 
 		events: {
-			'keypress #new-todo': 'createOnEnter'
+			'keypress #new-todo': 'onNewTodoKeyPress'
 		},
 
 		initialize: function() {
@@ -31,8 +31,9 @@ define([
 			return this;
 		},
 
-		createOnEnter: function (e) {
+		onNewTodoKeyPress: function (e) {
 			var trimmedTitle = this.$input.val().trim();
+			//Check if we used the return key
 			if (e.which !== 13 || !trimmedTitle) {
 				return;
 			}
@@ -40,8 +41,6 @@ define([
 			this.todoCollection.add(new TodoItemModel({title:trimmedTitle}));
 			this.$input.val('');
 		}
-
-
 	});
 
 	return HeaderView;

@@ -107,17 +107,16 @@ define([
 			return $child.parents(".todo:first");
 		},
 
-		getTodoIndexByTodoChild: function($child) {
+		getTodoIDByTodoChild: function($child) {
 			var $todoItem = this.get$TodoItemByTodoChild($child);
 
-			return $todoItem.data('index');
+			return $todoItem.data('id');
 		},
 
 		getTodoModelByTodoChild: function($child) {
-			var todoIndex = this.getTodoIndexByTodoChild($child),
-				filteredTodos = this.todosModel.get('filteredTodos');
+			var todoID = this.getTodoIDByTodoChild($child);
 
-			return filteredTodos[todoIndex];
+			return this.todoCollection.get(todoID);
 		}
 	});
 

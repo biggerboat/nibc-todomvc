@@ -2,7 +2,7 @@
 <label for="toggle-all">Mark all as complete</label>
 <ul id="todo-list">
 {{#filteredTodos}}
-	<li class="todo {{#completed}}completed{{/completed}} {{#editing}}editing{{/editing}}" data-index="{{@index}}">
+	<li class="todo {{#completed}}completed{{/completed}} {{#editing}}editing{{/editing}}" data-id="{{id}}">
 		<div class="view">
 			<input class="toggle" type="checkbox" {{#completed}}checked="checked"{{/completed}}>
 			<label>{{title}}</label>

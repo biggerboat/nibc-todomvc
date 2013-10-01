@@ -7,7 +7,7 @@ define([
 ) {
 	var TodoAppView = Backbone.View.extend({
 
-		navigatorBehaviors: ['IHasStateTransition'],
+		navigatorBehaviors: ['IHasStateTransition', 'IHasStateValidation'],
 		
 		className: 'todoAppView',
 		template: Handlebars.compile(template),
@@ -24,6 +24,24 @@ define([
 		render: function() {
 			this.$el.html(this.template({}));
 			return this;
+		},
+		
+		validate: function(truncatedState, fullState) {
+			console.log('TodoAppView -> validate', truncatedState.getPath(), fullState.getPath());
+
+			var editState = new navigatorjs.NavigationState("edit/*");
+
+			if(editState.equals(truncatedState)) {
+				var todoId = parseInt(truncatedState.getLastSegment());
+
+				if(todoId<10) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			return true;
 		},
 
 		transitionIn: function(callOnComplete) {

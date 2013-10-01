@@ -91,7 +91,7 @@ require([
 			this.stateViewMap.mapState("home").toView(HomeView).withArguments({injector:this.injector});
 
 			//TODO APP
-			var todoStates = ["todo", "todo/active", "todo/completed"],
+			var todoStates = ["todo", "todo/active", "todo/completed", "todo/edit/*", "todo/active/edit/*", "todo/completed/edit/*"],
 				todoRecipe = this.stateViewMap.mapState(todoStates).toView(TodoAppView).withArguments({injector:this.injector});
 
 			this.stateViewMap.mapState(todoStates).toView(HeaderView).withArguments({injector:this.injector}).withParent(todoRecipe).inside("#todoapp");

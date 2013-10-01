@@ -18,7 +18,10 @@ define([
 		events: {
 			'click .toggle': 'onToggleComplete',
 			'click .destroy': 'onDestroyClick',
-			'click #toggle-all': 'onToggleAllClick'
+			'click #toggle-all': 'onToggleAllClick',
+			'dblclick label': 'onDoubleClickLabel',
+			'keypress .edit': 'onEditKeyPress',
+			'blur .edit': 'onEditBlur'
 		},
 
 		initialize: function() {
@@ -33,27 +36,29 @@ define([
 
 			this.$toggleAll = this.$el.find('#toggle-all');
 
+			this.$el.find('.editing .edit').focus();
+
 			return this;
 		},
 
 		onToggleComplete: function(e) {
 			var $checkbox = $(e.target),
 				isCompleted = $checkbox.is(':checked'),
-				todoItemModel = this.getTodoModelByCheckbox($checkbox);
+				todoItemModel = this.getTodoModelByTodoChild($checkbox);
 			
 			todoItemModel.set({completed:isCompleted})
 		},
 
 		onDestroyClick: function(e) {
 			var $checkbox = $(e.target),
-				todoItemModel = this.getTodoModelByCheckbox($checkbox);
+				todoItemModel = this.getTodoModelByTodoChild($checkbox);
 
 			this.todoCollection.remove(todoItemModel);
 		},
 
 		onToggleAllClick: function(e) {
 			var completed = this.$toggleAll.is(':checked');
-			console.log('HeaderView -> onToggleAllClick', completed);
+			
 			this.todoCollection.each(function(todoItemModel) {
 				todoItemModel.set({
 					completed: completed
@@ -61,14 +66,55 @@ define([
 			});
 		},
 
-		getTodoIndexByCheckbox: function($checkbox) {
-			var $todoItem = $checkbox.parents(".todo:first");
+		onDoubleClickLabel: function(e) {
+			var $label = $(e.target),
+				model = this.getTodoModelByTodoChild($label);
+
+			model.set({editing:true});
+		},
+		
+		onEditKeyPress: function(e) {
+			if (e.which === 13) {
+				this.saveEdits();
+				this.stopEditing();
+			}
+		},
+		
+		onEditBlur: function(e) {
+			this.saveEdits();
+			this.stopEditing();
+		},
+		
+		saveEdits: function() {
+			var $editingTodo = this.$el.find(".todo.editing"),
+				$input = $editingTodo.find('.edit'),
+				activeTodo = this.todosModel.get('activeTodo');
+
+			if(activeTodo) {
+				activeTodo.set({title: $input.val()});
+			}
+		},
+		
+		stopEditing: function() {
+			var activeTodo = this.todosModel.get('activeTodo');
+
+			if(activeTodo) {
+				activeTodo.set({editing: false});
+			}
+		},
+
+		get$TodoItemByTodoChild: function($child) {
+			return $child.parents(".todo:first");
+		},
+
+		getTodoIndexByTodoChild: function($child) {
+			var $todoItem = this.get$TodoItemByTodoChild($child);
 
 			return $todoItem.data('index');
 		},
 
-		getTodoModelByCheckbox: function($checkbox) {
-			var todoIndex = this.getTodoIndexByCheckbox($checkbox),
+		getTodoModelByTodoChild: function($child) {
+			var todoIndex = this.getTodoIndexByTodoChild($child),
 				filteredTodos = this.todosModel.get('filteredTodos');
 
 			return filteredTodos[todoIndex];

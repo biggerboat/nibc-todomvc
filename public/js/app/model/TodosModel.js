@@ -8,7 +8,8 @@ define([
 			filter: 'all', //all, active, completed
 			remainingCount: 0,
 			completeCount: 0,
-			allCompleted: false
+			allCompleted: false,
+			activeTodo: null
 		},
 
 		initialize: function() {

@@ -4,7 +4,8 @@ define([
 	var TodoItemModel = Backbone.Model.extend({
 		defaults: {
 			title: '',
-			completed: false
+			completed: false,
+			editing: false
 		}
 	});
 

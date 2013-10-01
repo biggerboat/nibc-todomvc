@@ -16,7 +16,6 @@ define([
 		},
 
 		initialize: function() {
-
 			this.listenTo(this.todosModel, "change:filteredTodos", this.render);
 
 			this.render();

@@ -98,6 +98,7 @@ require([
 
 		bindCommands: function() {
 			this.bindCommand(this.injector.getInstance('todoCollection'), "change reset add remove", OnChangeUpdateFilteredTodos);
+			this.bindCommand(this.injector.getInstance('todosModel'), "change:filter", OnChangeUpdateFilteredTodos);
 		}
 	});
 

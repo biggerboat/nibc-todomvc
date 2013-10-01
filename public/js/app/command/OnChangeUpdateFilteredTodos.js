@@ -7,11 +7,10 @@ define([
 		todoCollection: 'inject',
 
 		execute:function () {
-			console.log('OnChangeUpdateFilteredTodos -> execute TODO');
+			var filter = this.todosModel.get('filter');
 
-			//TODO implement filtering
 			this.todosModel.set({
-				filteredTodos: this.todoCollection.models.slice(0)
+				filteredTodos: filter == 'all' ? this.todoCollection.models.slice(0) : this.todoCollection.where({completed: filter=='completed'})
 			});
 		}
 	});

@@ -56,7 +56,9 @@ require([
 			this.mapStates();
 			this.bindCommands();
 
-			this.njs.start(window.location.hash.replace('#',''));
+			var deeplinkState = window.location.hash.replace('#','');
+
+			this.njs.start(deeplinkState == '' ? 'home' :  deeplinkState);
 		},
 
 		initializeNavigator: function() {

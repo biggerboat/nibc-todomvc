@@ -7,7 +7,8 @@ define([
 			filteredTodos: null, // []
 			filter: 'all', //all, active, completed
 			remainingCount: 0,
-			completeCount: 0
+			completeCount: 0,
+			allCompleted: false
 		},
 
 		initialize: function() {

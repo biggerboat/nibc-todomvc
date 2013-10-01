@@ -13,20 +13,25 @@ define([
 		todoCollection: 'inject',
 		todosModel: 'inject',
 
+		$toggleAll: null,
+
 		events: {
 			'click .toggle': 'onToggleComplete',
-			'click .destroy': 'onDestroyClick'
+			'click .destroy': 'onDestroyClick',
+			'click #toggle-all': 'onToggleAllClick'
 		},
 
 		initialize: function() {
 			this.listenTo(this.todoCollection, "change", this.render);
-			this.listenTo(this.todosModel, "change:filteredTodos", this.render);
+			this.listenTo(this.todosModel, "change:filteredTodos change:allCompleted", this.render);
 
 			this.render();
 		},
 
 		render: function() {
 			this.$el.html(this.template(this.todosModel.toJSON()));
+
+			this.$toggleAll = this.$el.find('#toggle-all');
 
 			return this;
 		},
@@ -44,6 +49,16 @@ define([
 				todoItemModel = this.getTodoModelByCheckbox($checkbox);
 
 			this.todoCollection.remove(todoItemModel);
+		},
+
+		onToggleAllClick: function(e) {
+			var completed = this.$toggleAll.is(':checked');
+			console.log('HeaderView -> onToggleAllClick', completed);
+			this.todoCollection.each(function(todoItemModel) {
+				todoItemModel.set({
+					completed: completed
+				})
+			});
 		},
 
 		getTodoIndexByCheckbox: function($checkbox) {

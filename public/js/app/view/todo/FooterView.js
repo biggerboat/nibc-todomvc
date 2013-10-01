@@ -10,9 +10,11 @@ define([
 		tagName: 'footer',
 		template: Handlebars.compile(template),
 
+		todoCollection: 'inject',
 		todosModel: 'inject',
 
 		events: {
+			'click #clear-completed': 'onClearCompletedClick'
 		},
 
 		initialize: function() {
@@ -32,6 +34,10 @@ define([
 				filter = lastSegment == 'active' || lastSegment == 'completed' ? lastSegment : 'all';
 
 			this.todosModel.set({filter: filter});
+		},
+
+		onClearCompletedClick: function() {
+			this.todoCollection.reset();
 		}
 	});
 

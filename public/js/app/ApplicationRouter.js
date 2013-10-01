@@ -14,7 +14,7 @@ require([
 	'model/TodosModel',
 
 	//COMMANDS
-	'command/OnChangeUpdateFilteredTodos',
+	'command/OnChangeUpdateFilteredTodosCommand',
 	'command/OnChangeUpdateTodoStatsCommand',
 	'command/OnEditingTodoChangedUpdateActiveTodoCommand'
 ], function(
@@ -33,7 +33,7 @@ require([
 	TodosModel,
 
 	//COMMANDS
-	OnChangeUpdateFilteredTodos,
+	OnChangeUpdateFilteredTodosCommand,
 	OnChangeUpdateTodoStatsCommand,
 	OnEditingTodoChangedUpdateActiveTodoCommand
 ) {
@@ -101,8 +101,8 @@ require([
 		},
 
 		bindCommands: function() {
-			this.bindCommand(this.injector.getInstance('todoCollection'), "change reset add remove", OnChangeUpdateFilteredTodos);
-			this.bindCommand(this.injector.getInstance('todosModel'), "change:filter", OnChangeUpdateFilteredTodos);
+			this.bindCommand(this.injector.getInstance('todoCollection'), "change reset add remove", OnChangeUpdateFilteredTodosCommand);
+			this.bindCommand(this.injector.getInstance('todosModel'), "change:filter", OnChangeUpdateFilteredTodosCommand);
 
 			this.bindCommand(this.injector.getInstance('todoCollection'), "change:completed reset add remove", OnChangeUpdateTodoStatsCommand);
 

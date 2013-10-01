@@ -1,7 +1,7 @@
 define([
 	'common'
 ], function (common) {
-	var OnChangeUpdateFilteredTodos = Backbone.Command.extend({
+	var OnChangeUpdateFilteredTodosCommand = Backbone.Command.extend({
 
 		todosModel: 'inject',
 		todoCollection: 'inject',
@@ -15,5 +15,5 @@ define([
 		}
 	});
 
-	return OnChangeUpdateFilteredTodos;
+	return OnChangeUpdateFilteredTodosCommand;
 });

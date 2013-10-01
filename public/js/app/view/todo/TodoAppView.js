@@ -7,12 +7,15 @@ define([
 ) {
 	var TodoAppView = Backbone.View.extend({
 
-		navigatorBehaviors: ['IHasStateTransition', 'IHasStateValidation'],
+		navigatorBehaviors: ['IHasStateTransition', 'IHasStateValidation', 'IHasStateUpdate'],
 		
 		className: 'todoAppView',
 		template: Handlebars.compile(template),
 
 		injector: 'inject',
+		todoCollection: 'inject',
+		todosModel: 'inject',
+		njs: 'inject',
 
 		$todoapp: null,
 
@@ -27,21 +30,40 @@ define([
 		},
 		
 		validate: function(truncatedState, fullState) {
-			console.log('TodoAppView -> validate', truncatedState.getPath(), fullState.getPath());
-
 			var editState = new navigatorjs.NavigationState("edit/*");
 
 			if(editState.equals(truncatedState)) {
-				var todoId = parseInt(truncatedState.getLastSegment());
+				var todoId = parseInt(fullState.getLastSegment()),
+					segments = fullState.getSegments(),
+					filter = segments[segments.length-4],
+					where = {id:todoId};
 
-				if(todoId<10) {
-					return true;
-				} else {
-					return false;
+				if(filter=='active' || filter=='completed') {
+					where.completed = filter == 'completed';
 				}
+
+				return this.todoCollection.where(where).length>0;
 			}
 
 			return true;
+		},
+
+		updateState: function(truncatedState, fullState) {
+			var editState = new navigatorjs.NavigationState("edit/*");
+
+			if(editState.equals(truncatedState)) {
+				var todoId = parseInt(fullState.getLastSegment()),
+					todoToEdit = this.todoCollection.get(todoId);
+
+				//On deeplink we might arrive here on an invalid todoItem. Bounce when this happens.
+				if(todoToEdit) {
+					todoToEdit.set({editing:true});
+				} else {
+					var segments = fullState.getSegments();
+					segments = segments.splice(0,segments.length-2);
+					this.njs.request(segments.join('/'))
+				}
+			}
 		},
 
 		transitionIn: function(callOnComplete) {

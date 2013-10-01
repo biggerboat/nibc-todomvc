@@ -30,8 +30,8 @@ define([
 		},
 
 		updateState: function(truncatedState, fullState) {
-			var lastSegment = fullState.getLastSegment(),
-				filter = lastSegment == 'active' || lastSegment == 'completed' ? lastSegment : 'all';
+			var filterSegment = fullState.getSegments()[1],
+				filter = filterSegment == 'active' || filterSegment == 'completed' ? filterSegment : 'all';
 
 			this.todosModel.set({filter: filter});
 		},

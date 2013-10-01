@@ -16,7 +16,8 @@ require([
 	//COMMANDS
 	'command/OnChangeUpdateFilteredTodosCommand',
 	'command/OnChangeUpdateTodoStatsCommand',
-	'command/OnEditingTodoChangedUpdateActiveTodoCommand'
+	'command/OnEditingTodoChangedUpdateActiveTodoCommand',
+	'command/OnChangeActiveTodoUpdateURLCommand'
 ], function(
 	common,
 
@@ -35,7 +36,8 @@ require([
 	//COMMANDS
 	OnChangeUpdateFilteredTodosCommand,
 	OnChangeUpdateTodoStatsCommand,
-	OnEditingTodoChangedUpdateActiveTodoCommand
+	OnEditingTodoChangedUpdateActiveTodoCommand,
+	OnChangeActiveTodoUpdateURLCommand
 ) {
 
 	var ApplicationRouter = Backbone.CommandRouter.extend({
@@ -105,8 +107,9 @@ require([
 			this.bindCommand(this.injector.getInstance('todosModel'), "change:filter", OnChangeUpdateFilteredTodosCommand);
 
 			this.bindCommand(this.injector.getInstance('todoCollection'), "change:completed reset add remove", OnChangeUpdateTodoStatsCommand);
-
 			this.bindCommand(this.injector.getInstance('todoCollection'), "change:editing", OnEditingTodoChangedUpdateActiveTodoCommand);
+
+			this.bindCommand(this.injector.getInstance('todosModel'), "change:activeTodo", OnChangeActiveTodoUpdateURLCommand);
 		}
 	});
 

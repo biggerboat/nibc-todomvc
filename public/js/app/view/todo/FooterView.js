@@ -23,12 +23,15 @@ define([
 
 		render: function() {
 			this.$el.html(this.template(this.todosModel.toJSON()));
-
+			this.$el.find("."+this.todosModel.get('filter')).addClass('selected');
 			return this;
 		},
 
-		onStateUpdate: function(truncatedState, fullState) {
-			console.log('FooterView -> updateState', truncatedState.getPath(), fullState.getPath());
+		updateState: function(truncatedState, fullState) {
+			var lastSegment = fullState.getLastSegment(),
+				filter = lastSegment == 'active' || lastSegment == 'completed' ? lastSegment : 'all';
+
+			this.todosModel.set({filter: filter});
 		}
 	});
 

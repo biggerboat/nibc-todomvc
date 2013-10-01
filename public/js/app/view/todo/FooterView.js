@@ -37,7 +37,7 @@ define([
 		},
 
 		onClearCompletedClick: function() {
-			this.todoCollection.reset();
+			this.todoCollection.remove(this.todoCollection.where({completed:true}));
 		}
 	});
 

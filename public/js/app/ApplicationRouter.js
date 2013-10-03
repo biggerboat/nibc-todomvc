@@ -62,9 +62,9 @@ require([
 			this.mapStates();
 			this.bindCommands();
 
-			var deeplinkState = window.location.hash.replace('#','');
+			var urlState = this.stateUrlSyncer.getUrlState();
 
-			this.njs.start(deeplinkState == '' ? 'home' :  deeplinkState);
+			this.njs.start(urlState.equals('') ? 'home' : urlState);
 		},
 
 		initializeNavigator: function() {
@@ -72,7 +72,7 @@ require([
 			this.stateViewMap = new navigatorjs.integration.StateViewMap(this.njs, this.$el);
 			/** TMP, SHOULD MOVE INSIDE NAVIGATORJS */
 			this.stateUrlSyncer = new navigatorjs.integration.StateUrlSyncer(this.njs);
-			//this.stateUrlSyncer.usePushState("");
+			this.stateUrlSyncer.usePushState();
 			this.stateUrlSyncer.start();
 			/** END TMP */
 			this.injector.map("njs").toValue(this.njs);

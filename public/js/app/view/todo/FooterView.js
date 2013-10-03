@@ -12,9 +12,11 @@ define([
 
 		todoCollection: 'inject',
 		todosModel: 'inject',
+		njs: 'inject',
 
 		events: {
-			'click #clear-completed': 'onClearCompletedClick'
+			'click #clear-completed': 'onClearCompletedClick',
+			'click #filters a': 'onFilterClick'
 		},
 
 		initialize: function() {
@@ -38,6 +40,11 @@ define([
 
 		onClearCompletedClick: function() {
 			this.todoCollection.remove(this.todoCollection.where({completed:true}));
+		},
+
+		onFilterClick: function(e) {
+			e.preventDefault();
+			this.njs.request($(e.target).attr('href'));
 		}
 	});
 

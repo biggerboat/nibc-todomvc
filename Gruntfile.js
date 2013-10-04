@@ -100,7 +100,7 @@ module.exports = function (grunt) {
 
 		watch: {
 			dev: {
-				files: 'public/**/*',
+				files: ['public/**/*', '!public/js/vendors/**'],
 				options: {
 					livereload: true
 				}

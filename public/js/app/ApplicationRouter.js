@@ -55,8 +55,6 @@ require([
 		initialize: function(options) {
 			this.$el = options.$el;
 
-			this.injector.map('injector').toValue(this.injector);
-
 			this.initializeNavigator();
 			this.mapModels();
 			this.mapStates();

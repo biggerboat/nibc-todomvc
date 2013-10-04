@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
 	var date = new Date();
 	var now = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "_"+date.getHours()+"."+date.getMinutes()+"."+date.getSeconds();
+	var utils = require('grunt-connect-rewrite/lib/utils');
 
 	grunt.initConfig({
 		clean: {
@@ -57,7 +58,7 @@ module.exports = function (grunt) {
 		},
 
 		concurrent: {
-			dev: ['connect:dev', 'watch:dev']
+			dev: ['serve:dev', 'watch:dev']
 		},
 
 		connect: {
@@ -66,7 +67,14 @@ module.exports = function (grunt) {
 					keepalive: true,
 					open:true,
 					port: 9000,
-					base: 'public'
+					base: 'public',
+					middleware: function (connect, options) {
+						return [
+							connect.static(options.base), //Default
+							utils.rewriteRequest, // RewriteRules support, this modifies the request
+							connect.static(require('path').resolve(options.base)) //Try processing the request again
+						];
+					},
 				}
 			},
 			deploy: {
@@ -74,14 +82,25 @@ module.exports = function (grunt) {
 					keepalive: true,
 					open:true,
 					port: 9001,
-					base: 'tmp/deploy/'
+					base: 'tmp/deploy/',
+					middleware: function (connect, options) {
+						return [
+							connect.static(options.base), //Default
+							utils.rewriteRequest, // RewriteRules support, this modifies the request
+							connect.static(require('path').resolve(options.base)) //Try processing the request again
+						];
+					},
 				}
+			},
+
+			rules: {
+				'.*': '/index.html'
 			}
 		},
 
 		watch: {
 			dev: {
-				files: 'public/**/*',
+				files: ['public/**/*', '!public/js/vendors/**'],
 				options: {
 					livereload: true
 				}
@@ -138,6 +157,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-zip');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-connect-rewrite');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-ftp-deploy');
 	grunt.loadNpmTasks('grunt-open');
@@ -145,11 +165,12 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['deploy']);
 
 	grunt.registerTask('serve', ['concurrent:dev']);
+	grunt.registerTask('serve:dev', ['configureRewriteRules', 'connect:dev']);
 
 	grunt.registerTask('deploy', ['clean:tmp', 'copy:tmp', 'clean:tmp-js','copy:persistent-files','requirejs','replace:min']);
 	grunt.registerTask('deploy:zip', ['deploy','zip:deploy']);
 
-	grunt.registerTask('deploy:local', ['deploy','connect:deploy']);
+	grunt.registerTask('deploy:local', ['deploy', 'configureRewriteRules','connect:deploy']);
 
 	grunt.registerTask('deploy:staging', ['deploy', 'ftp-deploy:staging', 'open:staging']);
 	grunt.registerTask('deploy:staging:zip', ['deploy:zip', 'copy:deploy-zip-as-now', 'ftp-deploy:staging-zip', 'open:staging-zip']);

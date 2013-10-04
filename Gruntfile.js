@@ -58,7 +58,7 @@ module.exports = function (grunt) {
 		},
 
 		concurrent: {
-			dev: ['connect:dev', 'watch:dev']
+			dev: ['serve:dev', 'watch:dev']
 		},
 
 		connect: {
@@ -164,9 +164,8 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['deploy']);
 
-//	grunt.registerTask('serve', ['concurrent:dev']);
-	grunt.registerTask('serve', ['configureRewriteRules', 'concurrent:dev']);
-//	grunt.registerTask('serve', grunt.task.run(['configureRewriteRules','connect:dev']));
+	grunt.registerTask('serve', ['concurrent:dev']);
+	grunt.registerTask('serve:dev', ['configureRewriteRules', 'connect:dev']);
 
 	grunt.registerTask('deploy', ['clean:tmp', 'copy:tmp', 'clean:tmp-js','copy:persistent-files','requirejs','replace:min']);
 	grunt.registerTask('deploy:zip', ['deploy','zip:deploy']);

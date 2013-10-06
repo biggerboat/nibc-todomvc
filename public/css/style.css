@@ -1,18 +1,34 @@
+/* line 42, spritesheets/var/*.png */
+.var-sprite, .biggerBoat {
+  background: url('../images/generated/spritesheets/var-sdb9ed28d57.png') no-repeat;
+}
+
+/* line 4, ../../sass/style.scss */
+.biggerBoat {
+  background-position: 0 0;
+  height: 107px;
+  width: 279px;
+  float: right;
+  margin: 10px 0px 10px 30px;
+}
+
+/* line 10, ../../sass/style.scss */
 .homeView {
-	width: 600px;
+  width: 600px;
 }
-
+/* line 13, ../../sass/style.scss */
 .homeView img {
-	float: right;
-	margin: 10px 0px 10px 30px;
+  float: right;
+  margin: 10px 0px 10px 30px;
 }
 
+/* line 19, ../../sass/style.scss */
 .launch {
-	background: #cccccc;
-	padding: 5px;
-	border-radius: 5px;
+  background: #cccccc;
+  padding: 5px;
+  border-radius: 5px;
 }
-
+/* line 24, ../../sass/style.scss */
 .launch:active {
-	background: #dddddd;
+  background: #dddddd;
 }

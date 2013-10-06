@@ -58,7 +58,7 @@ module.exports = function (grunt) {
 		},
 
 		concurrent: {
-			dev: ['serve:dev', 'watch:dev']
+			dev: ['serve:dev', 'watch:dev', 'watch:sass']
 		},
 
 		connect: {
@@ -104,6 +104,11 @@ module.exports = function (grunt) {
 				options: {
 					livereload: true
 				}
+			},
+
+			sass: {
+				files:['sass/**/*'],
+				tasks:["compass:dev"]
 			}
 		},
 
@@ -147,7 +152,31 @@ module.exports = function (grunt) {
 			staging: { path: 'http://www.paultondeur.com/files/tmp/grunt/staging/' + now },
 			"staging-zip": { path: 'http://www.paultondeur.com/files/tmp/grunt/staging/zip/' + now +".zip" },
 			production: { path: 'http://www.paultondeur.com/files/tmp/grunt/production/' }
+		},
+
+		compass: {
+			clean: {
+				options: {
+					clean: true
+				}
+			},
+
+			dev: {
+				options: {
+					sassDir: 'sass',
+					config: 'sass/config.rb'
+				}
+			},
+
+			deploy: {
+				options: {
+					sassDir: 'sass',
+					outputStyle: 'compressed',
+					config: 'sass/config.rb'
+				}
+			}
 		}
+
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-clean');
@@ -161,6 +190,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-ftp-deploy');
 	grunt.loadNpmTasks('grunt-open');
+	grunt.loadNpmTasks('grunt-contrib-compass');
 
 	grunt.registerTask('default', ['deploy']);
 

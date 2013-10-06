@@ -1,0 +1,27 @@
+@import "spritesheets/var/*.png";
+$var-sprite-dimensions: true;
+
+.biggerBoat {
+	@include var-sprite( BiggerBoat );
+	float: right;
+	margin: 10px 0px 10px 30px;
+}
+
+.homeView {
+	width: 600px;
+
+	img {
+		float: right;
+		margin: 10px 0px 10px 30px;
+	}
+}
+
+.launch {
+	background: #cccccc;
+	padding: 5px;
+	border-radius: 5px;
+
+	&:active {
+		background: #dddddd;
+	}
+}

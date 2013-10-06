@@ -8,7 +8,7 @@ images_dir = "public/images"
 http_images_path = "../images"
 generated_images_dir = "public/images/generated"
 http_generated_images_dir = "../images/generated"
-javascripts_dir = "public/js"
+#javascripts_dir = "javascripts"
 
 
 # You can select your preferred output style here (can be overridden via the command line):

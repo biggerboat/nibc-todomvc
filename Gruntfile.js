@@ -6,7 +6,9 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		clean: {
 			tmp:["tmp/"],
-			'tmp-js':["tmp/deploy/js"]
+			'tmp-js':["tmp/deploy/js"],
+			'compass-generated':["public/css","public/images/generated"],
+			'tmp-spritesheets':["tmp/deploy/images/spritesheets"]
 		},
 
 		copy: {
@@ -194,10 +196,16 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['deploy']);
 
-	grunt.registerTask('serve', ['concurrent:dev']);
+	grunt.registerTask('clean:compass', ['clean:compass-generated', 'compass:clean']);
+
+	grunt.registerTask('serve', ['clean:compass', 'compass:dev', 'concurrent:dev']);
 	grunt.registerTask('serve:dev', ['configureRewriteRules', 'connect:dev']);
 
-	grunt.registerTask('deploy', ['clean:tmp', 'copy:tmp', 'clean:tmp-js','copy:persistent-files','requirejs','replace:min']);
+	grunt.registerTask('deploy',   ['clean:compass', 'compass:deploy', 'clean:tmp',
+									'copy:tmp', 'clean:tmp-js', 'clean:tmp-spritesheets',
+									'copy:persistent-files', 'requirejs', 'replace:min',
+									'clean:compass', 'compass:dev']);
+
 	grunt.registerTask('deploy:zip', ['deploy','zip:deploy']);
 
 	grunt.registerTask('deploy:local', ['deploy', 'configureRewriteRules','connect:deploy']);

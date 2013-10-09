@@ -1,14 +1,12 @@
 define([
-	'text!templates/todo/TodoListView.html',
-	'common'
-], function (template, common) {
+	'hbs!templates/todo/TodoListView'
+], function (template) {
 	var TodoListView = Backbone.View.extend({
 
 		navigatorBehaviors: [""],
 
 		id: 'main',
 		tagName: 'section',
-		template: Handlebars.compile(template),
 
 		todoCollection: 'inject',
 		todosModel: 'inject',
@@ -32,7 +30,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template(this.todosModel.toJSON()));
+			this.$el.html(template(this.todosModel.toJSON()));
 
 			this.$toggleAll = this.$el.find('#toggle-all');
 

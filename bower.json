@@ -1,10 +1,11 @@
 {
 	"name": "navigator-injector-backbone-command-setup",
 	"dependencies": {
+		"modernizr": "*",
+		"console-polyfill": "*",
 		"jquery": "*",
 		"requirejs": "*",
-		"requirejs-text": "*",
-		"handlebars": "*",
+		"require-handlebars-plugin": "*",
 		"navigator.js": "*",
 		"underscore": "*",
 		"backbone": "*",
@@ -13,6 +14,9 @@
 		"backbone-command": "*",
 		"backbone-recursive-toJSON": "*",
 		"greensock-js": "*",
+		"hammerjs": "*",
+		"enquire": "*",
+		"stats.js": "*",
 		"todomvc-common": "~0.1.8"
 	}
 }

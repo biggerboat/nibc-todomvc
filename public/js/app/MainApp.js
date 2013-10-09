@@ -1,9 +1,20 @@
 requirejs.config({
+
+	hbs : {
+		templateExtension : "hbs",
+		disableI18n : true,
+		disableHelpers: true //Disable the require-handlebars-plugin magic and use default handlebars behavior
+	},
+
 	paths:{
 		"vendors":"../vendors",
-		"text":"../vendors/requirejs-text/text",
+		"hbs":"../vendors/require-handlebars-plugin/hbs",
+		"handlebars" : "../vendors/require-handlebars-plugin/Handlebars",
+		"i18nprecompile" : "../vendors/require-handlebars-plugin/hbs/i18nprecompile",
+		"json2" : "../vendors/require-handlebars-plugin/hbs/json2",
+		"modernizr":"../vendors/modernizr/modernizr",
+		"console-polyfill":"../vendors/console-polyfill/index",
 		"jquery":"../vendors/jquery/jquery",
-		"handlebars":"../vendors/handlebars/handlebars",
 		"underscore":"../vendors/underscore/underscore",
 		"backbone":"../vendors/backbone/backbone",
 		"injector-js":"../vendors/injector.js/injector-js",
@@ -15,6 +26,10 @@ requirejs.config({
 		"TweenLite":"../vendors/greensock-js/src/uncompressed/TweenLite",
 		"TweenEasePack":"../vendors/greensock-js/src/uncompressed/easing/EasePack",
 		"TweenCSSPlugin":"../vendors/greensock-js/src/uncompressed/plugins/CSSPlugin",
+		"hammer":"../vendors/hammerjs/dist/hammer",
+		"jquery.hammer":"../vendors/hammerjs/dist/jquery.hammer",
+		"enquire":"../vendors/enquire/dist/enquire",
+		"stats":"../vendors/stats.js/src/Stats",
 		"handlebars-helpers":"plugins/handlebars-helpers",
 		"templates":"../templates"
 	},
@@ -22,8 +37,8 @@ requirejs.config({
 	// Sets the configuration for your third party scripts that are not AMD compatible
 	shim:{
 
-		"handlebars":{
-			"exports":"Handlebars"
+		"ApplicationRouter":{
+			"deps":["backbone"]
 		},
 
 		"injector-js":{
@@ -73,15 +88,17 @@ requirejs.config({
 			"deps":["TweenLite"]
 		},
 
-		"handlebars-helpers": {
-			deps: ["handlebars"]
+		"jquery.hammer":{
+			"deps":["hammer"]
 		}
 	}
 });
 
-define([
+require([
+	"ApplicationRouter",
+	"modernizr",
+	"console-polyfill",
 	"jquery",
-	"handlebars",
 	"underscore",
 	"backbone",
 	"injector-js",
@@ -93,7 +110,14 @@ define([
 	"TweenLite",
 	"TweenEasePack",
 	"TweenCSSPlugin",
+	"jquery.hammer",
+	"enquire",
+	"stats",
 	"handlebars-helpers"
-], function() {
-	//Enforce loading globally used libraries
+], function(ApplicationRouter) {
+	//Enforce loading globally used libraries and kicking application off
+	
+	$(function() {
+		var theRouter = new ApplicationRouter({$el: $("body")});
+	});
 });

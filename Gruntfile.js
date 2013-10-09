@@ -33,9 +33,21 @@ module.exports = function (grunt) {
 			compile: {
 				options: {
 					baseUrl: 'public/js/app',
-					mainConfigFile: "public/js/app/common.js",
-					name: 'ApplicationRouter',
-					out: 'tmp/deploy/js/app/ApplicationRouter.min.js'
+					mainConfigFile: "public/js/app/MainApp.js",
+					name: 'MainApp',
+					out: 'tmp/deploy/js/app/MainApp.min.js',
+
+					paths: {
+						"util/isDebug": "util/isDebug-production",
+						"stats": "util/ignore"
+					},
+
+					pragmasOnSave: {
+						//Exclude Handlebars as much as possible from the build
+						excludeHbsParser : true,
+						excludeHbs: true,
+						excludeAfterBuild: true
+					}
 				}
 			}
 		},
@@ -45,8 +57,8 @@ module.exports = function (grunt) {
 				src: ['tmp/**/*.html'],
 				overwrite: true,
 				replacements: [{
-					from: 'ApplicationRouter',
-					to: 'ApplicationRouter.min'
+					from: 'MainApp',
+					to: 'MainApp.min'
 				}]
 			}
 		},

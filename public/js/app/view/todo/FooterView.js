@@ -1,14 +1,12 @@
 define([
-	'text!templates/todo/FooterView.html',
-	'common'
-], function (template, common) {
+	'hbs!templates/todo/FooterView'
+], function (template) {
 	var FooterView = Backbone.View.extend({
 
 		navigatorBehaviors: ["IHasStateUpdate"],
 
 		id: 'footer',
 		tagName: 'footer',
-		template: Handlebars.compile(template),
 
 		todoCollection: 'inject',
 		todosModel: 'inject',
@@ -26,7 +24,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template(this.todosModel.toJSON()));
+			this.$el.html(template(this.todosModel.toJSON()));
 			this.$el.find("."+this.todosModel.get('filter')).addClass('selected');
 			return this;
 		},

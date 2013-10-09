@@ -1,6 +1,4 @@
-require([
-	'common',
-
+define([
 	//VIEWS
 	'view/HomeView',
 	'view/todo/TodoAppView',
@@ -17,10 +15,10 @@ require([
 	'command/OnChangeUpdateFilteredTodosCommand',
 	'command/OnChangeUpdateTodoStatsCommand',
 	'command/OnEditingTodoChangedUpdateActiveTodoCommand',
-	'command/OnChangeActiveTodoUpdateURLCommand'
-], function(
-	common,
+	'command/OnChangeActiveTodoUpdateURLCommand',
 
+	'util/isDebug'
+], function(
 	//VIEWS
 	HomeView,
 	TodoAppView,
@@ -37,7 +35,9 @@ require([
 	OnChangeUpdateFilteredTodosCommand,
 	OnChangeUpdateTodoStatsCommand,
 	OnEditingTodoChangedUpdateActiveTodoCommand,
-	OnChangeActiveTodoUpdateURLCommand
+	OnChangeActiveTodoUpdateURLCommand,
+
+	isDebug
 ) {
 
 	var ApplicationRouter = Backbone.CommandRouter.extend({
@@ -60,6 +60,10 @@ require([
 			this.mapStates();
 			this.bindCommands();
 
+			if(isDebug) {
+				this.addDebug();
+			}
+
 			var urlState = this.stateUrlSyncer.getUrlState();
 
 			this.njs.start(urlState.equals('') ? 'home' : urlState);
@@ -74,12 +78,6 @@ require([
 			this.stateUrlSyncer.start();
 			/** END TMP */
 			this.injector.map("njs").toValue(this.njs);
-
-			var debugConsole = new navigatorjs.features.DebugConsole(this.njs),
-				$debugConsole = debugConsole.get$El(),
-				cssPosition = {position: 'fixed', left: 10, bottom: 10};
-
-			$debugConsole.css(cssPosition).appendTo('body');
 		},
 
 		mapModels: function() {
@@ -108,11 +106,29 @@ require([
 			this.bindCommand(this.injector.getInstance('todoCollection'), "change:editing", OnEditingTodoChangedUpdateActiveTodoCommand);
 
 			this.bindCommand(this.injector.getInstance('todosModel'), "change:activeTodo", OnChangeActiveTodoUpdateURLCommand);
+		},
+
+		addDebug: function() {
+			var debugConsole = new navigatorjs.features.DebugConsole(this.njs),
+				$debugConsole = debugConsole.get$El(),
+				cssPosition = {position: 'fixed', left: 10, bottom: 10};
+
+			$debugConsole.css(cssPosition).appendTo('body');
+
+			var stats = new Stats();
+
+			// Align top-left
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.right = '10px';
+			stats.domElement.style.top = '10px';
+
+			document.body.appendChild( stats.domElement );
+
+			setInterval( function () {
+				stats.update();
+			}, 1000 / 60 );
 		}
 	});
 
-	$(function() {
-		var theRouter = new ApplicationRouter({$el: $("body")});
-		Backbone.history.start({});
-	});
+	return ApplicationRouter;
 });

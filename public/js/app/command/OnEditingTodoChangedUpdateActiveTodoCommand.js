@@ -1,6 +1,5 @@
 define([
-	'common'
-], function (common) {
+], function () {
 	var OnEditingTodoChangedUpdateActiveTodoCommand = Backbone.Command.extend({
 
 		todoCollection: 'inject',

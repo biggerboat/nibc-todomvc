@@ -1,0 +1,21 @@
+// Make sure you have the ruby gem "compass-h5bp" installed.
+// If not, run ```gem install compass-h5bp```
+@import "h5bp";
+
+@include h5bp-normalize;
+// OR make a selection of what you would like to normalize
+//@include h5bp-display;
+//@include h5bp-base;
+//@include h5bp-links;
+//@include h5bp-typography;
+//@include h5bp-lists;
+//@include h5bp-embeds;
+//@include h5bp-figures;
+//@include h5bp-forms;
+//@include h5bp-tables;
+// END OR
+
+@include h5bp-base-styles;
+//@include h5bp-chromeframe;
+@include h5bp-helpers;
+//@include h5bp-media; //Print styling

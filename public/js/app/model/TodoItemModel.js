@@ -1,6 +1,5 @@
 define([
-	'common'
-], function (common) {
+], function () {
 	var TodoItemModel = Backbone.Model.extend({
 		defaults: {
 			id: -1,

@@ -1,14 +1,12 @@
 define([
-	'text!templates/todo/InfoView.html',
-	'common'
-], function (template, common) {
+	'hbs!templates/todo/InfoView'
+], function (template) {
 	var InfoView = Backbone.View.extend({
 
 		navigatorBehaviors: [],
 
 		id: 'info',
 		tagName: 'footer',
-		template: Handlebars.compile(template),
 
 		events: {
 		},
@@ -18,7 +16,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(template({}));
 
 			return this;
 		}

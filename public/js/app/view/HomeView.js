@@ -1,13 +1,11 @@
 define([
-	'text!templates/HomeView.html',
-	'common'
-], function (template, common) {
+	'hbs!templates/HomeView'
+], function (template) {
 	var HomeView = Backbone.View.extend({
 
 		navigatorBehaviors: ["IHasStateTransition"],
 
 		className: 'homeView',
-		template: Handlebars.compile(template),
 
 		njs: 'inject',
 
@@ -21,7 +19,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(template({}));
 
 			return this;
 		},

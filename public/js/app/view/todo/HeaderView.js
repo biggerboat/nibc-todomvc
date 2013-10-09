@@ -1,15 +1,13 @@
 define([
-	'text!templates/todo/HeaderView.html',
-	'model/TodoItemModel',
-	'common'
-], function (template, TodoItemModel, common) {
+	'hbs!templates/todo/HeaderView',
+	'model/TodoItemModel'
+], function (template, TodoItemModel) {
 	var HeaderView = Backbone.View.extend({
 
 		navigatorBehaviors: [""],
 
 		id: 'header',
 		tagName: 'header',
-		template: Handlebars.compile(template),
 
 		todoCollection: 'inject',
 
@@ -24,7 +22,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(template({}));
 
 			this.$input = this.$el.find('#new-todo');
 

@@ -1,7 +1,6 @@
 define([
-	'model/TodoItemModel',
-	'common'
-], function (TodoItemModel, common) {
+	'model/TodoItemModel'
+], function (TodoItemModel) {
 	var TodosModel = Backbone.Model.extend({
 		defaults: {
 			filteredTodos: null, // []

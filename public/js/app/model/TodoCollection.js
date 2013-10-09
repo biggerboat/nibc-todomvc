@@ -1,6 +1,5 @@
 define([
-	'common'
-], function (common) {
+], function () {
 	var TodoCollection = Backbone.Collection.extend({
 
 	});

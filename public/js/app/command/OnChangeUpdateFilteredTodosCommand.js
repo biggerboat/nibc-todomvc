@@ -1,6 +1,5 @@
 define([
-	'common'
-], function (common) {
+], function () {
 	var OnChangeUpdateFilteredTodosCommand = Backbone.Command.extend({
 
 		todosModel: 'inject',

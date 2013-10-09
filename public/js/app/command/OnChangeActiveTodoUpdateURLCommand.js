@@ -1,6 +1,5 @@
 define([
-	'common'
-], function (common) {
+], function () {
 	var OnChangeActiveTodoUpdateURLCommand = Backbone.Command.extend({
 
 		njs: 'inject',

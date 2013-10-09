@@ -1,16 +1,13 @@
 define([
-	'text!templates/todo/TodoAppView.html',
-	'common'
+	'hbs!templates/todo/TodoAppView'
 ], function (
-	template,
-	common
+	template
 ) {
 	var TodoAppView = Backbone.View.extend({
 
 		navigatorBehaviors: ['IHasStateTransition', 'IHasStateValidation', 'IHasStateUpdate'],
 		
 		className: 'todoAppView',
-		template: Handlebars.compile(template),
 
 		injector: 'inject',
 		todoCollection: 'inject',
@@ -25,7 +22,7 @@ define([
 		},
 
 		render: function() {
-			this.$el.html(this.template({}));
+			this.$el.html(template({}));
 			return this;
 		},
 		

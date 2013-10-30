@@ -52,14 +52,16 @@ module.exports = function (grunt) {
 			}
 		},
 
-		replace: {
-			min: {
-				src: ['tmp/**/*.html'],
-				overwrite: true,
-				replacements: [{
-					from: 'MainApp',
-					to: 'MainApp.min'
-				}]
+		'cache-busting': {
+			requirejs: {
+				replace: ['tmp/**/*.html'],
+				replacement: 'MainApp',
+				file: 'tmp/deploy/js/app/MainApp.min.js'
+			},
+			css: {
+				replace: ['tmp/**/*.html'],
+				replacement: 'style.css',
+				file: 'tmp/deploy/css/style.css'
 			}
 		},
 
@@ -205,7 +207,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-cache-busting');
 	grunt.loadNpmTasks('grunt-zip');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -224,7 +226,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('deploy',   ['clean:compass', 'compass:deploy', 'clean:tmp',
 									'copy:tmp', 'clean:tmp-js', 'clean:tmp-spritesheets',
-									'copy:persistent-files', 'requirejs', 'replace:min',
+									'copy:persistent-files', 'requirejs', 'cache-busting',
 									'clean:compass', 'compass:dev']);
 
 	grunt.registerTask('deploy:zip', ['deploy','zip:deploy']);
